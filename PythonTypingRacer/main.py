@@ -85,6 +85,17 @@ hira_or_kata = [True, False]
 
 
 def to_kana(input_romaji):
+    """
+    Chuyển đổi văn bản từ romaji (chữ Latinh) sang kana (Hiragana hoặc Katakana) dựa trên cài đặt.
+    
+    Tham số:
+        input_romaji (str): Chuỗi văn bản dạng romaji cần được chuyển đổi.
+    ----------
+    Trả về:
+        str: Chuỗi văn bản đã được chuyển đổi sang dạng hira hoặc kana.
+    ----------
+    """
+
     if hira_or_kata[0]:
         return to_hiragana(input_romaji)
     if hira_or_kata[1]:
@@ -93,6 +104,13 @@ def to_kana(input_romaji):
 
 mouse_detected = False
 def one_click_accept():
+    """
+    Xác định xem người dùng đã nhấp chuột một lần hay không.
+    
+    Trả về:
+        bool: Trả về True nếu người dùng đã nhấp chuột một lần, ngược lại là False.
+    """
+
     global mouse_detected
     mouse_butt = pygame.mouse.get_pressed()
     if mouse_butt[0]:
@@ -107,6 +125,16 @@ def one_click_accept():
 
 
 def del_repetition(input_list):
+    """
+    Xóa các phần tử trùng lặp trong danh sách và trả về danh sách mới.
+    
+    Tham số:
+        input_list (list): Danh sách các phần tử cần loại bỏ trùng lặp.
+    ----------
+    Trả về:
+        list: Danh sách sau khi đã loại bỏ các phần tử trùng lặp.
+    ----------
+    """
     output_list = []
     for a in input_list:
         if a not in output_list:
@@ -115,6 +143,16 @@ def del_repetition(input_list):
 
 
 def split_str_to_list(input_string):
+    """
+    Chia một chuỗi thành danh sách với tối đa ba phần tử dựa trên dấu phẩy và xử lý chuỗi.
+
+    Tham số:
+        input_string (str): Chuỗi văn bản cần được chia tách.
+    ----------
+    Trả về:
+        list: Danh sách chứa tối đa ba phần tử sau khi xử lý chuỗi đầu vào.
+    ----------
+    """
     lst = ['', '', '']
 
     input_string = input_string.split(',')
@@ -141,6 +179,16 @@ def split_str_to_list(input_string):
 
 
 def ja_to_en(word):
+    """
+    Chuyển đổi một từ tiếng Nhật sang tiếng Anh dựa trên danh sách từ điển.
+
+    Tham số:
+        word (str): Từ tiếng Nhật cần chuyển đổi.
+    ----------
+    Trả về:
+        str: Từ tương ứng trong tiếng Anh.
+    ----------
+    """
     index = 0
     for i in range(len(wordlist)):
         if wordlist[i] == word:
@@ -335,7 +383,7 @@ def draw_menu():
     music_btn.draw()
 
     for i in range(len(choices)):
-        btn = LengthChoiceButton(270 + (i * 80), 495, str(i + 2), False, surface)
+        btn = LengthChoiceButton(270 + (i * 90), 495, str(i + 2), False, surface)
         btn.draw()
         if btn.clicked:
             if choice_commits[i]:
