@@ -404,6 +404,18 @@ class ModeButton:
 
 
 def draw_screen():
+    """
+    Vẽ giao diện chính của trò chơi trên màn hình.
+    
+    Mô tả:
+    - Vẽ khung viền và các đường phân chia các khu vực khác nhau của màn hình.
+    - Hiển thị thông tin về cấp độ hiện tại, chuỗi hoạt động của người chơi, điểm số và mức điểm cao nhất.
+    - Vẽ và xử lý các thành phần giao diện như nút tạm dừng và các thông tin liên quan đến trò chơi.
+    
+    Trả về:
+    - `bool`: Trạng thái của nút tạm dừng (True nếu đã được nhấp, ngược lại là False).
+    """
+
     # screen outlines for main game window and 'header' section
     pygame.draw.rect(screen, (32, 42, 68), [0, HEIGHT - 100, WIDTH, 100], 0)
     pygame.draw.rect(screen, 'white', [0, 0, WIDTH, HEIGHT], 5)
@@ -432,6 +444,24 @@ def draw_screen():
 
 
 def draw_menu():
+    """
+    Vẽ giao diện menu của trò chơi trên màn hình.
+    
+    Mô tả:
+    - Vẽ các thành phần giao diện như các nút tùy chọn chế độ chơi, nút thoát, nút hướng dẫn, và các nút tùy chọn âm nhạc.
+    - Kiểm tra tương tác của người chơi với các nút và cập nhật trạng thái tương ứng.
+    
+    Trả về:
+    - `tuple`: Một tuple chứa:
+        - `bool`: Trạng thái của nút "PLAY" (True nếu đã được nhấp, ngược lại là False).
+        - `list`: Danh sách trạng thái của các tùy chọn độ dài chữ cái (True hoặc False).
+        - `bool`: Trạng thái của nút "QUIT" 
+        - `bool`: Trạng thái của nút "BACK MENU"
+        - `bool`: Trạng thái của nút "?" (hướng dẫn)
+        - `bool`: Trạng thái của nút "I>" (âm nhạc)
+        - `bool`: Trạng thái của nút "GAME MODE"
+    """
+
     choice_commits = copy.deepcopy(choices)
     surface = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
     pygame.draw.rect(surface, (0, 0, 0, 100), [200, 100, 600, 450], 0, 5)
@@ -477,6 +507,15 @@ def draw_menu():
 
 
 def draw_cannot_change_mode_while_playing():
+    """
+    Vẽ thông báo không thể thay đổi chế độ chơi trong khi đang chơi trên màn hình.
+
+    Mô tả:
+    - Tạo một bề mặt mới với hiệu ứng trong suốt.
+    - Vẽ một hộp thoại chứa thông báo không thể thay đổi chế độ chơi trong khi đang chơi.
+    - Hiển thị văn bản thông báo bằng phông chữ và màu sắc được chỉ định.
+    """
+
     surface = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
     pygame.draw.rect(surface, (0, 0, 0, 100), [805, 250, 150, 185], 0, 5)
     pygame.draw.rect(surface, (0, 0, 0, 200), [805, 250, 150, 185], 5, 5)
@@ -490,6 +529,19 @@ def draw_cannot_change_mode_while_playing():
 
 
 def draw_manual():
+    """
+    Vẽ hướng dẫn cách chơi trên màn hình.
+
+    Mô tả:
+    - Tạo một bề mặt mới với hiệu ứng trong suốt.
+    - Vẽ một hộp thoại chứa hướng dẫn cách chơi.
+    - Hiển thị văn bản hướng dẫn bằng phông chữ và màu sắc được chỉ định.
+    - Vẽ nút điều hướng trở lại menu.
+
+    Trả về:
+    - `bool`: Trạng thái của nút điều hướng trở lại menu (True nếu đã được nhấp, ngược lại là False).
+    """
+
     surface = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
     pygame.draw.rect(surface, (0, 0, 0, 100), [200, 70, 600, 500], 0, 5)
     pygame.draw.rect(surface, (0, 0, 0, 200), [200, 70, 600, 500], 5, 5)
@@ -509,6 +561,25 @@ def draw_manual():
 
 
 def draw_music_option():
+    """
+    Vẽ tùy chọn âm nhạc trên màn hình.
+
+    Mô tả:
+    - Tạo một bề mặt mới với hiệu ứng trong suốt.
+    - Vẽ một hộp thoại chứa tùy chọn âm nhạc.
+    - Hiển thị văn bản tiêu đề và các tùy chọn âm nhạc như dừng/chạy nhạc, tăng/giảm âm lượng.
+    - Vẽ nút điều hướng trở lại menu, dừng/chạy nhạc, và các nút tăng/giảm âm lượng.
+    - Hiển thị trạng thái hiện tại của tùy chọn âm nhạc.
+
+    Trả về:
+    - Một tuple chứa các giá trị:
+        - `bool`: Trạng thái của nút điều hướng trở lại menu (True nếu đã được nhấp, ngược lại là False).
+        - `bool`: Trạng thái của nút dừng nhạc 
+        - `bool`: Trạng thái của nút chạy nhạc 
+        - `bool`: Trạng thái của nút tăng âm lượng
+        - `bool`: Trạng thái của nút giảm âm lượng
+    """
+
     surface = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
     pygame.draw.rect(surface, (0, 0, 0, 100), [200, 100, 600, 400], 0, 5)
     pygame.draw.rect(surface, (0, 0, 0, 200), [200, 100, 600, 400], 5, 5)
@@ -558,6 +629,23 @@ def draw_music_option():
 
 
 def draw_game_over():
+    """
+    Vẽ giao diện khi trò chơi kết thúc trên màn hình.
+
+    Mô tả:
+    - Tạo một bề mặt mới với hiệu ứng trong suốt.
+    - Vẽ một hộp thoại chứa thông báo kết thúc trò chơi.
+    - Hiển thị thông tin về điểm số của người chơi, bao gồm điểm số hiện tại và liệu có lập kỷ lục mới hay không.
+    - Vẽ các nút như: bắt đầu lại, quay lại menu, thoát, và lịch sử từ.
+    
+    Trả về:
+    - Một tuple chứa các giá trị:
+        - `bool`: Trạng thái của nút bắt đầu lại
+        - `bool`: Trạng thái của nút quay lại menu
+        - `bool`: Trạng thái của nút thoát 
+        - `bool`: Trạng thái của nút lịch sử từ 
+    """
+
     surface = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
     pygame.draw.rect(surface, (0, 0, 0, 100), [200, 100, 600, 400], 0, 5)
     pygame.draw.rect(surface, (0, 0, 0, 200), [200, 100, 600, 400], 5, 5)
@@ -587,6 +675,20 @@ def draw_game_over():
 
 
 def draw_are_you_sure():
+    """
+    Vẽ giao diện xác nhận hành động trên màn hình.
+
+    Mô tả:
+    - Tạo một bề mặt mới với hiệu ứng trong suốt.
+    - Vẽ một hộp thoại chứa câu hỏi xác nhận hành động từ người chơi.
+    - Hiển thị các nút "YES" và "NO" để người chơi chọn lựa.
+
+    Trả về:
+    - Một tuple chứa các giá trị:
+        - `bool`: Trạng thái của nút "YES"
+        - `bool`: Trạng thái của nút "NO"
+    """
+
     surface = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
     pygame.draw.rect(surface, (0, 0, 0, 100), [200, 200, 600, 250], 0, 5)
     pygame.draw.rect(surface, (0, 0, 0, 200), [200, 200, 600, 250], 5, 5)
@@ -603,6 +705,24 @@ def draw_are_you_sure():
 
 
 def draw_game_mode():
+    """
+    Vẽ giao diện chế độ chơi trên màn hình.
+
+    Mô tả:
+    - Tạo một bề mặt mới với hiệu ứng trong suốt.
+    - Vẽ một hộp thoại chứa các tùy chọn về chế độ chơi, độ khó, và hiển thị chủ đề.
+    - Hiển thị tiêu đề và các nút điều khiển như trở về menu, chọn độ khó (dễ, vừa, khó), và kiểu chữ (hiragana, katakana).
+    - Hiển thị các nút để điều chỉnh chủ đề trò chơi, bao gồm tăng/giảm chủ đề và hiển thị chủ đề hiện tại.
+    - Cập nhật và hiển thị các lựa chọn đã được người dùng chọn, như độ khó và kiểu chữ.
+
+    Trả về:
+    - Một tuple chứa các giá trị:
+        - `bool`: Trạng thái của nút trở về menu.
+        - `bool`: Trạng thái của nút chọn độ khó dễ.
+        - `bool`: Trạng thái của nút chọn độ khó khó.
+        - `bool`: Trạng thái của nút chọn hiragana.
+        - `bool`: Trạng thái của nút chọn katakana.
+    """
     surface = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
     pygame.draw.rect(surface, (0, 0, 0, 100), [200, 100, 600, 460], 0, 5)
     pygame.draw.rect(surface, (0, 0, 0, 200), [200, 100, 600, 460], 5, 5)
@@ -676,6 +796,26 @@ def draw_game_mode():
 y_pos_of_text_part = 0
 miss, hit = True, False
 def draw_history():
+    """
+    Vẽ màn hình lịch sử trong ứng dụng pygame, hiển thị danh sách các lựa chọn 'hit' (đúng) hoặc 'miss' (sai).
+    Người dùng có thể xem lại các câu trả lời trước đó của mình được phân loại thành hit hoặc miss cùng với bản dịch và ý nghĩa tương ứng.
+    Màn hình này cũng cung cấp các nút tương tác để chuyển đổi giữa hiển thị danh sách hit hoặc miss và một nút để quay trở lại màn hình kết thúc trò chơi.
+
+    Hàm này xử lý tương tác của người dùng với các nút hit và miss để chuyển đổi danh sách hiển thị.
+    Nó điều chỉnh động kích thước nội dung dựa trên số lượng mục và đảm bảo nội dung vừa vặn trong khu vực đã định trước,
+    với khả năng cuộn qua các mục nếu chúng vượt quá khu vực nhìn thấy.
+
+    Các biến toàn cục sử dụng:
+    - miss: Một biến boolean chỉ ra nếu nút miss đang được kích hoạt.
+    - hit: Một biến boolean chỉ ra nếu nút hit đang được kích hoạt.
+    - y_pos_of_text_part: Một biến số nguyên theo dõi vị trí cuộn dọc của phần văn bản lịch sử.
+    
+    Thay đổi:
+    - Các biến toàn cục `miss`, `hit` và `y_pos_of_text_part` dựa trên tương tác người dùng.
+    
+    Trả về:
+    - Boolean: Trả về True nếu nút quay lại màn hình kết thúc trò chơi được nhấn, ngược lại trả về False.
+    """
     surface = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
     pygame.draw.rect(surface, (0, 0, 0, 100), [140, 70, 720, 515], 0, 5)
     pygame.draw.rect(surface, (0, 0, 0, 200), [140, 70, 720, 515], 5, 5)
@@ -755,6 +895,16 @@ def draw_history():
 
 
 def get_speed(len_text):
+    """
+    Xác định tốc độ của từ dựa trên độ dài của từ và chế độ chơi hiện tại.
+
+    Tham số:
+    - len_text (int): Độ dài của từ.
+
+    Trả về:
+    - float: Tốc độ của từ được xác định ngẫu nhiên từ một tập hợp các giá trị dựa trên độ dài của từ và chế độ chơi hiện tại.
+    """
+
     if mode_choices[0]:
         if len_text in [2, 3]:
             return random.choice([1, 1.5, 2])
@@ -779,6 +929,12 @@ def get_speed(len_text):
 
 
 def get_number_of_word_base_on_mode():
+    """
+    Xác định số lượng từ cần có trong cấp độ hiện tại dựa trên chế độ chơi và cấp độ trò chơi.
+
+    Trả về:
+    - int: Số lượng từ cần có trong cấp độ hiện tại dựa trên chế độ chơi và cấp độ trò chơi.
+    """
     if mode_choices[0]:
         if level <= 2:
             return level
@@ -803,6 +959,18 @@ def get_number_of_word_base_on_mode():
 
 
 def generate_level():
+    """
+    Tạo cấp độ trò chơi mới với một số từ ngẫu nhiên.
+
+    Mô tả:
+    - Xác định số lượng từ cần có trong cấp độ hiện tại.
+    - Tạo các từ ngẫu nhiên với vị trí y và x, tốc độ và văn bản.
+    - Lưu các đối tượng từ vào danh sách `word_objs`.
+
+    Trả về:
+    - list: Danh sách các đối tượng từ được tạo trong cấp độ hiện tại.
+    """
+
     word_objs = []
     include = []
     vertical_spacing = (HEIGHT - 150) // get_number_of_word_base_on_mode()
@@ -831,6 +999,16 @@ def generate_level():
 
 
 def check_answer(scor):
+    """
+    Kiểm tra câu trả lời người dùng đã nhập.
+
+    Tham số:
+    - scor (int): Điểm số hiện tại của người chơi.
+
+    Trả về:
+    - int: Điểm số cập nhật sau khi kiểm tra câu trả lời.
+    """
+
     global submit_to_english
     for wrd in word_objects:
         if wrd.text == submit:
@@ -845,6 +1023,10 @@ def check_answer(scor):
 
 
 def check_high_score():
+    """
+    Cập nhật điểm cao nếu điểm hiện tại cao hơn điểm cao hiện có.
+    """
+
     global high_score
     if score > high_score:
         high_score = score
@@ -852,6 +1034,25 @@ def check_high_score():
 
 pop_up_start_time = 0
 def pop_up(duration):
+    """
+    Kích hoạt một thông báo pop-up và thiết lập một bộ đếm thời gian dựa trên thời lượng chỉ định.
+    Thông báo này ngăn người dùng thay đổi chế độ chơi trong khi trò chơi đang diễn ra.
+
+    Chức năng này sử dụng biến toàn cục để theo dõi thời điểm bắt đầu của pop-up và để quản lý trạng thái hiển thị của cảnh báo ngăn thay đổi chế độ chơi.
+
+    Args:
+    - duration (int hoặc float): Thời gian hiển thị pop-up, tính bằng giây. Đây cũng là khoảng thời gian mà người dùng không thể thay đổi chế độ chơi.
+
+    Biến toàn cục:
+    - pop_up_start_time (float): Biến được sử dụng để lưu thời gian bắt đầu kích hoạt pop-up. Giá trị này được cập nhật mỗi khi hàm được gọi.
+    - show_cannot_change_mode_while_playing (bool): Biến kiểm soát việc hiển thị thông báo ngăn thay đổi chế độ.
+    - Được thiết lập là True khi pop-up được kích hoạt và nên được đặt lại thành False bởi sự kiện bộ đếm thời gian khi hết thời gian chỉ định.
+
+    Tác dụng phụ:
+    - Thiết lập một bộ đếm thời gian trong pygame, sự kiện này được định nghĩa để tự động xử lý việc ẩn thông báo và cho phép thay đổi chế độ chơi trở lại sau khi thời gian chỉ định đã qua.
+    - Sự kiện này sử dụng pygame.USEREVENT + 1 để nhận biết và cần được xử lý phù hợp trong vòng lặp sự kiện chính của trò chơi.
+    """
+
     global pop_up_start_time, show_cannot_change_mode_while_playing
     show_cannot_change_mode_while_playing = True
     pop_up_start_time = time.time()
