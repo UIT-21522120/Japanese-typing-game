@@ -198,6 +198,19 @@ def ja_to_en(word):
 
 
 class Word:
+    """
+    Lớp Word biểu diễn một từ trong trò chơi với các thuộc tính liên quan đến vị trí và tốc độ di chuyển của từ.
+
+    Thuộc tính:
+        text (str): Văn bản của từ.
+        speed (float): Tốc độ di chuyển của từ trên màn hình.
+        y_pos (int): Vị trí y của từ trên màn hình.
+        x_pos (int): Vị trí x của từ trên màn hình.
+
+    Phương thức:
+        draw(): Hiển thị từ trên màn hình tại vị trí hiện tại.
+        update(): Cập nhật vị trí của từ theo tốc độ di chuyển.
+    """
     def __init__(self, text, speed, y_pos, x_pos):
         self.text = text
         self.speed = speed
@@ -205,6 +218,10 @@ class Word:
         self.x_pos = x_pos
 
     def draw(self):
+        """
+        Hiển thị từ trên màn hình tại vị trí hiện tại.
+        Nếu từ khớp với phần đầu của chuỗi đang hoạt động, nó sẽ được tô màu xanh.
+        """
         color = 'black'
         screen.blit(font.render(self.text, True, color), (self.x_pos, self.y_pos))
         act_len = len(to_kana(active_string))
@@ -213,10 +230,28 @@ class Word:
             screen.blit(font.render(to_kana(active_string), True, 'green'), (self.x_pos, self.y_pos))
 
     def update(self):
+        """
+        Cập nhật vị trí của từ theo tốc độ di chuyển.
+        """
+
         self.x_pos -= self.speed
 
 
 class Button:
+    """
+    Lớp Button biểu diễn một nút trong trò chơi với các thuộc tính liên quan đến vị trí, văn bản và trạng thái của nút.
+
+    Thuộc tính:
+        x_pos (int): Vị trí x của nút trên màn hình.
+        y_pos (int): Vị trí y của nút trên màn hình.
+        text (str): Văn bản hiển thị trên nút.
+        clicked (bool): Trạng thái của nút (đã được nhấp hay chưa).
+        surf (pygame.Surface): Bề mặt để vẽ nút.
+
+    Phương thức:
+        draw(): Vẽ nút trên màn hình và kiểm tra sự tương tác của người dùng.
+    """
+
     def __init__(self, x_pos, y_pos, text, clicked, surf):
         self.x_pos = x_pos
         self.y_pos = y_pos
@@ -225,6 +260,11 @@ class Button:
         self.surf = surf
 
     def draw(self):
+        """
+        Vẽ nút trên màn hình và kiểm tra sự tương tác của người dùng.
+        Nếu người dùng nhấp chuột lên nút, trạng thái của nút sẽ được cập nhật.
+        """
+
         cir = pygame.draw.circle(self.surf, (45, 89, 135), (self.x_pos, self.y_pos), 35)
         if cir.collidepoint(pygame.mouse.get_pos()):
             if one_click_accept():
@@ -237,6 +277,20 @@ class Button:
 
 
 class LengthChoiceButton:
+    """
+    Lớp LengthChoiceButton biểu diễn một nút lựa chọn độ dài trong trò chơi với các thuộc tính liên quan đến vị trí, văn bản và trạng thái của nút.
+
+    Thuộc tính:
+        x_pos (int): Vị trí x của nút trên màn hình.
+        y_pos (int): Vị trí y của nút trên màn hình.
+        text (str): Văn bản hiển thị trên nút.
+        clicked (bool): Trạng thái của nút (đã được nhấp hay chưa).
+        surf (pygame.Surface): Bề mặt để vẽ nút.
+
+    Phương thức:
+        draw(): Vẽ nút trên màn hình và kiểm tra sự tương tác của người dùng.
+    """
+
     def __init__(self, x_pos, y_pos, text, clicked, surf):
         self.x_pos = x_pos
         self.y_pos = y_pos
@@ -245,6 +299,11 @@ class LengthChoiceButton:
         self.surf = surf
 
     def draw(self):
+        """
+        Vẽ nút trên màn hình và kiểm tra sự tương tác của người dùng.
+        Nếu người dùng nhấp chuột lên nút, trạng thái của nút sẽ được cập nhật.
+        """
+
         cir = pygame.draw.circle(self.surf, (45, 89, 135), (self.x_pos, self.y_pos), 35)
         if cir.collidepoint(pygame.mouse.get_pos()):
             butts = pygame.mouse.get_pressed()
@@ -258,6 +317,21 @@ class LengthChoiceButton:
 
 
 class ModeButton:
+    """
+    Lớp ModeButton biểu diễn một nút chế độ trong trò chơi với các thuộc tính liên quan đến vị trí, văn bản, loại chế độ và trạng thái của nút.
+
+    Thuộc tính:
+        x_pos (int): Vị trí x của nút trên màn hình.
+        y_pos (int): Vị trí y của nút trên màn hình.
+        text (str): Văn bản hiển thị trên nút.
+        clicked (bool): Trạng thái của nút (đã được nhấp hay chưa).
+        surf (pygame.Surface): Bề mặt để vẽ nút.
+        type (str): Loại chế độ của nút ("Mode" hoặc "Game_over").
+
+    Phương thức:
+        draw(): Vẽ nút trên màn hình và kiểm tra sự tương tác của người dùng.
+    """
+
     def __init__(self, x_pos, y_pos, text, clicked, surf, type):
         self.x_pos = x_pos
         self.y_pos = y_pos
@@ -267,6 +341,11 @@ class ModeButton:
         self.type = type
 
     def draw(self):
+        """
+        Vẽ nút trên màn hình và kiểm tra sự tương tác của người dùng.
+        Nếu người dùng nhấp chuột lên nút, trạng thái của nút sẽ được cập nhật.
+        """
+
         if self.type == 'Mode':
             rect = pygame.draw.rect(self.surf, (45, 89, 135), (self.x_pos, self.y_pos, 150, 60), 0, 10)
             if rect.collidepoint(pygame.mouse.get_pos()):
