@@ -585,13 +585,13 @@ def draw_music_option():
 
     pygame.draw.circle(surface, 'black', (300 + (current_vol * 18), 255), 9)
 
-    # Thêm nút Previous và Next
+    # Add Previous and Next buttons
     prev_btn = Button(250, 400, '<', False, surface)
     prev_btn.draw()
     next_btn = Button(730, 400, '>', False, surface)
     next_btn.draw()
     
-    # Hiển thị tên bài nhạc đang chọn
+    # Displays the name of the currently selected song
     surface.blit(banner_font.render(f'MUSIC {current_track_index + 1}', True, 'white'), (440, 380))
     screen.blit(surface, (0, 0))
     return music_to_menu_btn.clicked, music_pause_btn.clicked, music_unpause_btn.clicked, volume_up.clicked, volume_down.clicked, prev_btn.clicked, next_btn.clicked
