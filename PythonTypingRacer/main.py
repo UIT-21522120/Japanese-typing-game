@@ -447,9 +447,7 @@ def draw_menu():
     game_mode_btn = ModeButton(250, 220, 'GAME MODE', False, surface, 'Game_over')
     game_mode_btn.draw()
 
-    # surface.blit(header_font.render('PLAY!', True, 'white'), (300, 140))
     surface.blit(header_font.render('MANUAL', True, 'white'), (600, 140))
-    # surface.blit(header_font.render('QUIT', True, 'white'), (300, 225))
     surface.blit(header_font.render('MUSIC', True, 'white'), (600, 225))
     surface.blit(header_font.render('Active Letter Lengths:', True, 'white'), (210, 395))
 
@@ -866,16 +864,15 @@ def draw_history():
 
 def get_player_name():
     """
-    Lấy tên người chơi từ bàn phím.
+     Get player name from keyboard.
 
-    Mô tả:
-    - Tạo một bề mặt mới với hiệu ứng trong suốt.
-    - Vẽ một hộp thoại chứa hướng dẫn nhập tên người chơi.
-    - Hiển thị văn bản hướng dẫn bằng phông chữ và màu sắc được chỉ định.
-    - Hiển thị tên người chơi được nhập vào bàn phím.
-
-    Trả về:
-    - String: Tên người chơi được nhập từ bàn phím.
+     Describe:
+     - Create a new surface with transparency effect.
+     - Draw a dialog box containing instructions for entering a player's name.
+     - Display instruction text in specified font and color.
+     - Displays the player name entered on the keyboard.
+     Return:
+     - String: Player name entered from the keyboard.
     """
    
     surface = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
@@ -946,60 +943,58 @@ def load_leaderboard():
         return []
 
 
-y_pos_of_leaderboard = 0  # Define this outside the function, globally
+y_pos_of_leaderboard = 0  
 
 def draw_leaderboard():
     """
-    Draw the leaderboard screen with scroll functionality and bounded display.
+    Draw the leaderboard screen on the screen.
+    list: A list of tuples containing the player's name and score sorted by score in descending order.
     """
     global y_pos_of_leaderboard
 
-    # Define the area for the leaderboard and its visual boundaries
     bounds_x, bounds_y, bounds_width, bounds_height = 200, 70, 550, 500
     visible_area = pygame.Rect(bounds_x, bounds_y, bounds_width, bounds_height-30)
 
-    # Create a semi-transparent surface for the leaderboard
     surface = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
     pygame.draw.rect(surface, (0, 0, 0, 100), [bounds_x, bounds_y, bounds_width, bounds_height], 0,5)
     pygame.draw.rect(surface, (0, 0, 0, 200), [bounds_x, bounds_y, bounds_width, bounds_height], 5,5)
 
     leaderboard = load_leaderboard()
 
-    # Setting up scrolling bounds
     total_content_height = len(leaderboard) * 50
-    min_y_pos = min(100, bounds_height - total_content_height)  # Negative or zero
-    y_pos_of_leaderboard = max(min_y_pos, y_pos_of_leaderboard)  # Ensure not to scroll past content
+    min_y_pos = min(100, bounds_height - total_content_height)  
+    y_pos_of_leaderboard = max(min_y_pos, y_pos_of_leaderboard)  
 
-    # Process events (assume this function is called within the event loop context)
+  
     for event in pygame.event.get():
         if event.type == pygame.MOUSEBUTTONDOWN:
-            if event.button == 4:  # Scroll up
+            if event.button == 4:  
                 y_pos_of_leaderboard += 50
-            elif event.button == 5:  # Scroll down
+            elif event.button == 5:  
                 y_pos_of_leaderboard -= 50
 
-        # Restrict the scroll position
+        
         y_pos_of_leaderboard = max(min_y_pos, min(0, y_pos_of_leaderboard))
 
-    # Apply clipping to the main screen for drawing leaderboard
+    
     screen.set_clip(visible_area)
-    y_start = bounds_y + y_pos_of_leaderboard  # Start drawing from this y position
+    y_start = bounds_y + y_pos_of_leaderboard  
 
-    # Draw the leaderboard entries within bounds
+    
     for i, (name, score) in enumerate(leaderboard):
         entry_y = y_start + i * 50
-        if bounds_y <= entry_y <= bounds_y + bounds_height - 50:  # Check if within visible bounds
+        if bounds_y <= entry_y <= bounds_y + bounds_height - 50:  
             entry_text = font.render(f"{i + 1}. {name}: {score}", True, 'white')
             screen.blit(entry_text, (bounds_x + 100, entry_y))
 
-    # Reset clipping to allow drawing other elements
+    
     screen.set_clip(None)
 
-    # Draw the "Back" button or other interface elements
+    
     leaderboard_to_menu_btn = Button(245, 115, '<-', False, surface)
     leaderboard_to_menu_btn.draw()
 
-    # Blit the entire surface to the main screen
+    
     screen.blit(surface, (0, 0))
     return leaderboard_to_menu_btn.clicked
 
@@ -1168,7 +1163,7 @@ def pop_up(duration):
     pop_up_start_time = time.time()
     pygame.time.set_timer(pygame.USEREVENT + 1, duration * 1000)
 
-
+#variables for the game
 show_history = False
 new_record_found = False
 show_theme = True
@@ -1186,9 +1181,8 @@ wordlist = []
 wordlist_translated = []
 
 run = True
-# player_name = get_player_name()
 while run:
-    # load từ từ bảng hira hoặc kata vào
+    # load wordlist based on hira_or_kata choice of player and set wordlist_translated
     if hira_or_kata[0]:
         wordlist = wordlist_hira
         wordlist_translated = wordlist_hira_translated
@@ -1199,14 +1193,14 @@ while run:
     len_indexes = []
     length = 1
 
-    # wordlist.sort(key=len)
+    
     for i in range(len(wordlist)):
         if len(wordlist[i]) > length:
             length += 1
             len_indexes.append(i)
     len_indexes.append(len(wordlist))
 
-    # in lên màn hình
+    # check if the player has started the game
     screen.fill('gray')
     timer.tick(fps)
     # draw static background
@@ -1286,7 +1280,7 @@ while run:
             if vol_down_butt and cur_vol <= 0.1:
                 pygame.mixer.music.set_volume(0)
 
-            # Xử lý đổi bài hát
+            # change music track
             if prev_track_butt:
                 current_track_index = (current_track_index - 1) % len(music_tracks)
                 pygame.mixer.music.load(music_tracks[current_track_index])
@@ -1376,7 +1370,7 @@ while run:
         show_cannot_change_mode_while_playing = False
     if new_level and not pz:
         word_objects = generate_level()
-        # lấy tất cả những từ đã xuất hiện cho vào all_words_appeared list
+        # get the list of all words appeared in the game
         for i in word_objects:
             all_words_appeared.append(i.text)
         new_level = False

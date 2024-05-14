@@ -30,18 +30,7 @@ except ImportError:
 
 
 
-#
-# Ruby/Romkan - a Romaji <-> Kana conversion library for Ruby.
-#
-# Copyright (C) 2001 Satoru Takabayashi <satoru@namazu.org>
-#     All rights reserved.
-#     This is free software with ABSOLUTELY NO WARRANTY.
-#
-# You can redistribute it and/or modify it under the terms of 
-# the Ruby's licence.
-#
 
-# This table is imported from KAKASI <http://kakasi.namazu.org/> and modified.
 
 KUNREITAB = """ァ       xa      ア       a       ィ       xi      イ       i       ゥ       xu
 ウ       u       ヴ       vu      ヴァ      va      ヴィ      vi      ヴェ      ve
