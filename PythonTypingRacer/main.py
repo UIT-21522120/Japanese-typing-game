@@ -2,6 +2,8 @@ import copy
 import time
 import pygame
 import random
+import sys
+
 
 from wordlist import *
 from convert import to_hiragana, to_roma, to_katakana
@@ -23,22 +25,22 @@ save_score = 0
 theme_list = ['1.png', '2.jpg', '3.jpg','4.jpg','5.jpg','6.jpg']
 random_theme_index = random.randint(0, len(theme_list) - 1)
 
-header_font = pygame.font.Font('D://Python/PythonTypingRacer/PythonTypingRacer/assets/fonts/square.ttf', 50)
-header_font_2 = pygame.font.Font('D://Python/PythonTypingRacer/PythonTypingRacer/assets/fonts/square.ttf', 25)
-pause_font = pygame.font.Font('D://Python/PythonTypingRacer/PythonTypingRacer/assets/fonts/1up.ttf', 38)
-pause_font_for_mode = pygame.font.Font('D://Python/PythonTypingRacer/PythonTypingRacer/assets/fonts/1up.ttf', 25)
-banner_font = pygame.font.Font('D://Python/PythonTypingRacer/PythonTypingRacer/assets/fonts/1up.ttf', 28)
-font = pygame.font.Font('D://Python/PythonTypingRacer/PythonTypingRacer/assets/fonts/jp.ttf', 45)
-font2 = pygame.font.Font('D://Python/PythonTypingRacer/PythonTypingRacer/assets/fonts/jp.ttf', 30)
-font3 = pygame.font.Font('D://Python/PythonTypingRacer/PythonTypingRacer/assets/fonts/jp.ttf', 25)
-font_for_manual = pygame.font.Font('D://Python/PythonTypingRacer/PythonTypingRacer/assets/fonts/jp.ttf', 20)
+header_font = pygame.font.Font('D://Python/PythonTypingRacer/Japanese-typing-game/PythonTypingRacer/assets/fonts/square.ttf', 50)
+header_font_2 = pygame.font.Font('D://Python/PythonTypingRacer/Japanese-typing-game/PythonTypingRacer/assets/fonts/square.ttf', 25)
+pause_font = pygame.font.Font('D://Python/PythonTypingRacer/Japanese-typing-game/PythonTypingRacer/assets/fonts/1up.ttf', 38)
+pause_font_for_mode = pygame.font.Font('D://Python/PythonTypingRacer/Japanese-typing-game/PythonTypingRacer/assets/fonts/1up.ttf', 25)
+banner_font = pygame.font.Font('D://Python/PythonTypingRacer/Japanese-typing-game/PythonTypingRacer/assets/fonts/1up.ttf', 28)
+font = pygame.font.Font('D://Python/PythonTypingRacer/Japanese-typing-game/PythonTypingRacer/assets/fonts/jp.ttf', 45)
+font2 = pygame.font.Font('D://Python/PythonTypingRacer/Japanese-typing-game/PythonTypingRacer/assets/fonts/jp.ttf', 30)
+font3 = pygame.font.Font('D://Python/PythonTypingRacer/Japanese-typing-game/PythonTypingRacer/assets/fonts/jp.ttf', 25)
+font_for_manual = pygame.font.Font('D://Python/PythonTypingRacer/Japanese-typing-game/PythonTypingRacer/assets/fonts/jp.ttf', 20)
 
 # music and sounds
 # Music tracks list
 music_tracks = [
-    'D://Python/PythonTypingRacer/PythonTypingRacer/assets/sounds/music.mp3',
-    'D://Python/PythonTypingRacer/PythonTypingRacer/assets/sounds/music1.mp3',
-    'D://Python/PythonTypingRacer/PythonTypingRacer/assets/sounds/music2.mp3'
+    'D://Python/PythonTypingRacer/Japanese-typing-game/PythonTypingRacer/assets/sounds/music.mp3',
+    'D://Python/PythonTypingRacer/Japanese-typing-game/PythonTypingRacer/assets/sounds/music1.mp3',
+    'D://Python/PythonTypingRacer/Japanese-typing-game/PythonTypingRacer/assets/sounds/music2.mp3'
 ]
 current_track_index = 0  # Index of the currently playing track
 
@@ -46,9 +48,9 @@ pygame.mixer.init()
 pygame.mixer.music.load(music_tracks[0])
 pygame.mixer.music.set_volume(0.3)
 pygame.mixer.music.play(-1)
-click = pygame.mixer.Sound('D://Python/PythonTypingRacer/PythonTypingRacer/assets/sounds/click.mp3')
-woosh = pygame.mixer.Sound('D://Python/PythonTypingRacer/PythonTypingRacer/assets/sounds/Swoosh.mp3')
-wrong = pygame.mixer.Sound('D://Python/PythonTypingRacer/PythonTypingRacer/assets/sounds/Instrument Strum.mp3')
+click = pygame.mixer.Sound('D://Python/PythonTypingRacer/Japanese-typing-game/PythonTypingRacer/assets/sounds/click.mp3')
+woosh = pygame.mixer.Sound('D://Python/PythonTypingRacer/Japanese-typing-game/PythonTypingRacer/assets/sounds/Swoosh.mp3')
+wrong = pygame.mixer.Sound('D://Python/PythonTypingRacer/Japanese-typing-game/PythonTypingRacer/assets/sounds/Instrument Strum.mp3')
 click.set_volume(0.3)
 woosh.set_volume(0.2)
 wrong.set_volume(0.3)
@@ -59,7 +61,7 @@ lives = 5
 word_objects = []
 
 high_score = 0
-
+new_game = True
 pz = True
 new_level = True
 submit = ''
@@ -488,6 +490,10 @@ def draw_menu():
     manual_btn = Button(550, 165, '?', False, surface)
     manual_btn.draw()
 
+    leaderboard_button = ModeButton(520, 305, 'HISTORY', False, surface, 'Game_over')
+    leaderboard_button.draw()
+
+
     music_btn = Button(550, 250, 'I>', False, surface)
     music_btn.draw()
 
@@ -501,9 +507,11 @@ def draw_menu():
                 choice_commits[i] = True
         if choices[i]:
             pygame.draw.circle(surface, 'yellow', (270 + (i * 80), 495), 35, 5)
+   
+
     screen.blit(surface, (0, 0))
     return (resume_btn.clicked, choice_commits, quit_btn.clicked, backmenu_btn.clicked, manual_btn.clicked,
-            music_btn.clicked, game_mode_btn.clicked)
+            music_btn.clicked, game_mode_btn.clicked, leaderboard_button.clicked)
 
 
 def draw_cannot_change_mode_while_playing():
@@ -894,6 +902,136 @@ def draw_history():
     return history_to_game_over_btn.clicked
 
 
+def get_player_name():
+    """
+    Lấy tên người chơi từ bàn phím.
+
+    Mô tả:
+    - Tạo một bề mặt mới với hiệu ứng trong suốt.
+    - Vẽ một hộp thoại chứa hướng dẫn nhập tên người chơi.
+    - Hiển thị văn bản hướng dẫn bằng phông chữ và màu sắc được chỉ định.
+    - Hiển thị tên người chơi được nhập vào bàn phím.
+
+    Trả về:
+    - String: Tên người chơi được nhập từ bàn phím.
+    """
+   
+    surface = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
+    pygame.draw.rect(surface, (0, 0, 0, 100), [200, 200, 600, 250], 0, 5)
+    pygame.draw.rect(surface, (0, 0, 0, 200), [200, 200, 600, 250], 5, 5)
+    surface.blit(header_font.render('Enter your name:', True, 'white'), (300, 220))
+    
+    overlay = pygame.Surface((WIDTH, HEIGHT))
+    overlay.fill((0, 0, 0))  
+    overlay.set_alpha(100)  
+    screen.blit(overlay, (0, 0))  
+
+    name = ''
+    name_entered = False
+    clock = pygame.time.Clock()
+    while not name_entered:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    name_entered = True
+                elif event.key == pygame.K_BACKSPACE:
+                    name = name[:-1]
+                else:
+                    name += event.unicode
+        surface.blit(font.render(name, True, 'white'), (WIDTH // 2 - 50, HEIGHT // 2 - 50))
+        screen.blit(surface, (0, 0))
+        pygame.display.update()
+        clock.tick(60)
+    return name
+
+
+def save_score_to_leaderboard(name, score):
+    """
+    Save the player's name and score to a leaderboard file.
+    """
+    with open("D://Python/PythonTypingRacer/Japanese-typing-game/PythonTypingRacer/leaderboard.txt", "a") as f:
+        f.write(f"{name}: {score}\n")
+
+
+def load_leaderboard():
+    """
+    Load the leaderboard from the leaderboard file.
+
+    Returns:
+    - list: A list of tuples containing the player's name and score.
+    """
+    try:
+        with open("D://Python/PythonTypingRacer/Japanese-typing-game/PythonTypingRacer/leaderboard.txt", "r") as f:
+            leaderboard = [line.strip().split(": ") for line in f.readlines()]
+            leaderboard = [(name, int(score)) for name, score in leaderboard]
+            leaderboard.sort(key=lambda x: x[1], reverse=True)
+            return leaderboard
+    except FileNotFoundError:
+        return []
+
+
+y_pos_of_leaderboard = 0  # Define this outside the function, globally
+
+def draw_leaderboard():
+    """
+    Draw the leaderboard screen with scroll functionality and bounded display.
+    """
+    global y_pos_of_leaderboard
+
+    # Define the area for the leaderboard and its visual boundaries
+    bounds_x, bounds_y, bounds_width, bounds_height = 200, 70, 550, 500
+    visible_area = pygame.Rect(bounds_x, bounds_y, bounds_width, bounds_height-30)
+
+    # Create a semi-transparent surface for the leaderboard
+    surface = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
+    pygame.draw.rect(surface, (0, 0, 0, 100), [bounds_x, bounds_y, bounds_width, bounds_height], 0,5)
+    pygame.draw.rect(surface, (0, 0, 0, 200), [bounds_x, bounds_y, bounds_width, bounds_height], 5,5)
+    surface.blit(header_font.render('LEADERBOARD', True, 'white'), (350, 90))
+
+    leaderboard = load_leaderboard()
+
+    # Setting up scrolling bounds
+    total_content_height = len(leaderboard) * 50
+    min_y_pos = min(80, bounds_height - total_content_height)  # Negative or zero
+    y_pos_of_leaderboard = max(min_y_pos, y_pos_of_leaderboard)  # Ensure not to scroll past content
+
+    # Process events (assume this function is called within the event loop context)
+    for event in pygame.event.get():
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 4:  # Scroll up
+                y_pos_of_leaderboard += 50
+            elif event.button == 5:  # Scroll down
+                y_pos_of_leaderboard -= 50
+
+        # Restrict the scroll position
+        y_pos_of_leaderboard = max(min_y_pos, min(0, y_pos_of_leaderboard))
+
+    # Apply clipping to the main screen for drawing leaderboard
+    screen.set_clip(visible_area)
+    y_start = bounds_y + y_pos_of_leaderboard  # Start drawing from this y position
+
+    # Draw the leaderboard entries within bounds
+    for i, (name, score) in enumerate(leaderboard):
+        entry_y = y_start + i * 50
+        if bounds_y <= entry_y <= bounds_y + bounds_height - 50:  # Check if within visible bounds
+            entry_text = font.render(f"{i + 1}. {name}: {score}", True, 'white')
+            screen.blit(entry_text, (bounds_x + 100, entry_y))
+
+    # Reset clipping to allow drawing other elements
+    screen.set_clip(None)
+
+    # Draw the "Back" button or other interface elements
+    leaderboard_to_menu_btn = Button(245, 115, '<-', False, surface)
+    leaderboard_to_menu_btn.draw()
+
+    # Blit the entire surface to the main screen
+    screen.blit(surface, (0, 0))
+    return leaderboard_to_menu_btn.clicked
+
+
 def get_speed(len_text):
     """
     Xác định tốc độ của từ dựa trên độ dài của từ và chế độ chơi hiện tại.
@@ -1069,11 +1207,14 @@ show_menu = True
 show_manual = False
 show_music = False
 show_game_over = False
+show_leaderboard = False
+play_name = False
 
 wordlist = []
 wordlist_translated = []
 
 run = True
+# player_name = get_player_name()
 while run:
     # load từ từ bảng hira hoặc kata vào
     if hira_or_kata[0]:
@@ -1097,16 +1238,19 @@ while run:
     screen.fill('gray')
     timer.tick(fps)
     # draw static background
-    theme_image = pygame.image.load(f'D://Python/PythonTypingRacer/PythonTypingRacer/assets/theme/{theme_list[random_theme_index]}').convert()
+    theme_image = pygame.image.load(f'D://Python/PythonTypingRacer/Japanese-typing-game/PythonTypingRacer/assets/theme/{theme_list[random_theme_index]}').convert()
     blurred_image = theme_image.copy()
     pygame.Surface.blit(blurred_image, theme_image, (0, 0))
     blurred_image.set_alpha(150)
     if show_theme:
         screen.blit(blurred_image, (0, 0))
     pause_butt = draw_screen()
+    if play_name == False:
+        player_name = get_player_name()
+        play_name = True
     if pz:
         if show_menu:
-            resume_butt, changes, quit_butt, backmenu_butt, manual_butt, music_butt, game_mode_butt = draw_menu()
+            resume_butt, changes, quit_butt, backmenu_butt, manual_butt, music_butt, game_mode_butt, leaderboard_pressed = draw_menu()
             if resume_butt:
                 pz = False
                 show_menu = False
@@ -1132,6 +1276,18 @@ while run:
                 show_music = True
             if one_click_accept():
                 choices = changes
+            if leaderboard_pressed:
+                show_menu = False
+                show_leaderboard = True
+                pygame.time.delay(25)
+        if show_leaderboard:
+            leaderboard_to_menu_butt = draw_leaderboard()
+            
+            if leaderboard_to_menu_butt:
+                show_leaderboard = False
+                show_menu = True
+                pygame.time.delay(25)
+        
         if show_manual:
             manual_to_menu_butt = draw_manual()
             if manual_to_menu_butt:
@@ -1312,7 +1468,7 @@ while run:
             pz = True
             show_menu = True
 
-    if lives < 0:
+    if lives == 0:
         save_score = score
         if score > high_score:
             new_record_found = True
@@ -1325,10 +1481,12 @@ while run:
         word_objects = []
         new_level = True
         check_high_score()
+        save_score_to_leaderboard(player_name, high_score)
         score = 0
         all_words_appeared = del_repetition(all_words_appeared)
         hit_list = del_repetition(hit_list)
         miss_list = [wrd for wrd in all_words_appeared if wrd not in hit_list]
+        
 
     real_fps = timer.get_fps()
     fps_text = font_for_manual.render("FPS: {:.1f}".format(real_fps), True, 'black')

@@ -1,0 +1,6 @@
+Alice: 1200
+Bob: 987
+Charlie: 1234
+Diana: 1150
+hung: 0
+dat: 10
