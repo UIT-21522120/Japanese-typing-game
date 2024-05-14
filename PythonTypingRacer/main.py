@@ -351,7 +351,7 @@ class ModeButton:
                 self.surf.blit(pause_font_for_mode.render(self.text, True, '#ffffcc'), (self.x_pos + 65, self.y_pos + 12))
             if self.text == 'QUIT':
                 self.surf.blit(pause_font_for_mode.render(self.text, True, '#ffffcc'), (self.x_pos + 70, self.y_pos + 12))
-            if self.text == 'HISTORY':
+            if self.text == 'RANKING':
                 self.surf.blit(pause_font_for_mode.render(self.text, True, '#ffffcc'), (self.x_pos + 36, self.y_pos + 12))
             if self.text == 'PLAY':
                 self.surf.blit(pause_font_for_mode.render(self.text, True, '#ffffcc'), (self.x_pos + 65, self.y_pos + 12))
@@ -456,7 +456,7 @@ def draw_menu():
     manual_btn = Button(550, 165, '?', False, surface)
     manual_btn.draw()
 
-    leaderboard_button = ModeButton(520, 305, 'HISTORY', False, surface, 'Game_over')
+    leaderboard_button = ModeButton(520, 305, 'RANKING', False, surface, 'Game_over')
     leaderboard_button.draw()
 
 
