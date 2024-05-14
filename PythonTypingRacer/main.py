@@ -86,14 +86,14 @@ hira_or_kata = [True, False]
 
 def to_kana(input_romaji):
     """
-    Chuyển đổi văn bản từ romaji (chữ Latinh) sang kana (Hiragana hoặc Katakana) dựa trên cài đặt.
+    Converts text from romaji (ローマ字) to kana (Hiragana or Katakana) based on settings.
     
-    Tham số:
-        input_romaji (str): Chuỗi văn bản dạng romaji cần được chuyển đổi.
-    ----------
-    Trả về:
-        str: Chuỗi văn bản đã được chuyển đổi sang dạng hira hoặc kana.
-    ----------
+     Parameters:
+         input_romaji (str): The romaji text string to be converted.
+     ----------
+     Return:
+         str: Text string that has been converted to hira or kana.
+     ----------
     """
 
     if hira_or_kata[0]:
@@ -105,10 +105,10 @@ def to_kana(input_romaji):
 mouse_detected = False
 def one_click_accept():
     """
-    Xác định xem người dùng đã nhấp chuột một lần hay không.
+    Determine whether the user clicked once or not.
     
-    Trả về:
-        bool: Trả về True nếu người dùng đã nhấp chuột một lần, ngược lại là False.
+    Return:
+         bool: Returns True if the user has clicked once, False otherwise.
     """
 
     global mouse_detected
@@ -126,14 +126,15 @@ def one_click_accept():
 
 def del_repetition(input_list):
     """
-    Xóa các phần tử trùng lặp trong danh sách và trả về danh sách mới.
+    Remove duplicate elements in the list and return a new list.
     
-    Tham số:
-        input_list (list): Danh sách các phần tử cần loại bỏ trùng lặp.
+    Parameters:
+         input_list (list): List of elements to remove duplicates.
+     ----------
+    Return:
+         list: List after removing duplicate elements.
     ----------
-    Trả về:
-        list: Danh sách sau khi đã loại bỏ các phần tử trùng lặp.
-    ----------
+
     """
     output_list = []
     for a in input_list:
@@ -144,14 +145,15 @@ def del_repetition(input_list):
 
 def split_str_to_list(input_string):
     """
-    Chia một chuỗi thành danh sách với tối đa ba phần tử dựa trên dấu phẩy và xử lý chuỗi.
+    Split a string into a list with up to three elements based on commas and process the string.
 
-    Tham số:
-        input_string (str): Chuỗi văn bản cần được chia tách.
+    Parameters:
+         input_string (str): Text string to be split.
+     ----------
+    Return:
+         list: List containing up to three elements after processing the input string.
     ----------
-    Trả về:
-        list: Danh sách chứa tối đa ba phần tử sau khi xử lý chuỗi đầu vào.
-    ----------
+
     """
     lst = ['', '', '']
 
@@ -180,13 +182,13 @@ def split_str_to_list(input_string):
 
 def ja_to_en(word):
     """
-    Chuyển đổi một từ tiếng Nhật sang tiếng Anh dựa trên danh sách từ điển.
+    Convert a Japanese word to English based on the dictionary list.
 
-    Tham số:
-        word (str): Từ tiếng Nhật cần chuyển đổi.
-    ----------
-    Trả về:
-        str: Từ tương ứng trong tiếng Anh.
+    Parameters:
+         word (str): Japanese word to convert.
+     ----------
+    Return:
+         str: Corresponding word in English.
     ----------
     """
     index = 0
@@ -199,17 +201,18 @@ def ja_to_en(word):
 
 class Word:
     """
-    Lớp Word biểu diễn một từ trong trò chơi với các thuộc tính liên quan đến vị trí và tốc độ di chuyển của từ.
+    The Word class represents a word in the game with properties related to the word's position and movement speed.
 
-    Thuộc tính:
-        text (str): Văn bản của từ.
-        speed (float): Tốc độ di chuyển của từ trên màn hình.
-        y_pos (int): Vị trí y của từ trên màn hình.
-        x_pos (int): Vị trí x của từ trên màn hình.
+    Properties:
+         text (str): Text of the word.
+         speed (float): Speed of movement of words on the screen.
+         y_pos (int): The y position of the word on the screen.
+         x_pos (int): The x position of the word on the screen.
 
-    Phương thức:
-        draw(): Hiển thị từ trên màn hình tại vị trí hiện tại.
-        update(): Cập nhật vị trí của từ theo tốc độ di chuyển.
+    Method:
+         draw(): Display the word on the screen at the current position.
+         update(): Updates the position of the word according to movement speed.
+
     """
     def __init__(self, text, speed, y_pos, x_pos):
         self.text = text
@@ -219,8 +222,8 @@ class Word:
 
     def draw(self):
         """
-        Hiển thị từ trên màn hình tại vị trí hiện tại.
-        Nếu từ khớp với phần đầu của chuỗi đang hoạt động, nó sẽ được tô màu xanh.
+        Displays the word on the screen at the current location.
+        If the word matches the beginning of the active string, it will be colored blue.
         """
         color = 'black'
         screen.blit(font.render(self.text, True, color), (self.x_pos, self.y_pos))
@@ -231,25 +234,19 @@ class Word:
 
     def update(self):
         """
-        Cập nhật vị trí của từ theo tốc độ di chuyển.
+        Update the position of the word according to the movement speed.
         """
-
         self.x_pos -= self.speed
 
 
 class Button:
     """
-    Lớp Button biểu diễn một nút trong trò chơi với các thuộc tính liên quan đến vị trí, văn bản và trạng thái của nút.
+    The Button class represents a button in a game with properties related to the button's position, text, and state.
 
-    Thuộc tính:
-        x_pos (int): Vị trí x của nút trên màn hình.
-        y_pos (int): Vị trí y của nút trên màn hình.
-        text (str): Văn bản hiển thị trên nút.
-        clicked (bool): Trạng thái của nút (đã được nhấp hay chưa).
-        surf (pygame.Surface): Bề mặt để vẽ nút.
-
-    Phương thức:
-        draw(): Vẽ nút trên màn hình và kiểm tra sự tương tác của người dùng.
+    Properties:
+         text (str): Text displayed on the button.
+         clicked (bool): Status of the button (has been clicked or not).
+         surf (pygame.Surface): Surface to draw buttons.
     """
 
     def __init__(self, x_pos, y_pos, text, clicked, surf):
@@ -261,8 +258,8 @@ class Button:
 
     def draw(self):
         """
-        Vẽ nút trên màn hình và kiểm tra sự tương tác của người dùng.
-        Nếu người dùng nhấp chuột lên nút, trạng thái của nút sẽ được cập nhật.
+        Draw a button on the screen and test user interaction.
+        If the user clicks on the button, the button's state will be updated.
         """
 
         cir = pygame.draw.circle(self.surf, (45, 89, 135), (self.x_pos, self.y_pos), 35)
@@ -278,17 +275,7 @@ class Button:
 
 class LengthChoiceButton:
     """
-    Lớp LengthChoiceButton biểu diễn một nút lựa chọn độ dài trong trò chơi với các thuộc tính liên quan đến vị trí, văn bản và trạng thái của nút.
-
-    Thuộc tính:
-        x_pos (int): Vị trí x của nút trên màn hình.
-        y_pos (int): Vị trí y của nút trên màn hình.
-        text (str): Văn bản hiển thị trên nút.
-        clicked (bool): Trạng thái của nút (đã được nhấp hay chưa).
-        surf (pygame.Surface): Bề mặt để vẽ nút.
-
-    Phương thức:
-        draw(): Vẽ nút trên màn hình và kiểm tra sự tương tác của người dùng.
+    The LengthChoiceButton class represents an in-game length selection button with properties related to the button's position, text, and state.
     """
 
     def __init__(self, x_pos, y_pos, text, clicked, surf):
@@ -299,11 +286,6 @@ class LengthChoiceButton:
         self.surf = surf
 
     def draw(self):
-        """
-        Vẽ nút trên màn hình và kiểm tra sự tương tác của người dùng.
-        Nếu người dùng nhấp chuột lên nút, trạng thái của nút sẽ được cập nhật.
-        """
-
         cir = pygame.draw.circle(self.surf, (45, 89, 135), (self.x_pos, self.y_pos), 35)
         if cir.collidepoint(pygame.mouse.get_pos()):
             butts = pygame.mouse.get_pressed()
@@ -318,18 +300,7 @@ class LengthChoiceButton:
 
 class ModeButton:
     """
-    Lớp ModeButton biểu diễn một nút chế độ trong trò chơi với các thuộc tính liên quan đến vị trí, văn bản, loại chế độ và trạng thái của nút.
-
-    Thuộc tính:
-        x_pos (int): Vị trí x của nút trên màn hình.
-        y_pos (int): Vị trí y của nút trên màn hình.
-        text (str): Văn bản hiển thị trên nút.
-        clicked (bool): Trạng thái của nút (đã được nhấp hay chưa).
-        surf (pygame.Surface): Bề mặt để vẽ nút.
-        type (str): Loại chế độ của nút ("Mode" hoặc "Game_over").
-
-    Phương thức:
-        draw(): Vẽ nút trên màn hình và kiểm tra sự tương tác của người dùng.
+       ModeButton class represents an in-game mode button with properties related to position, text, mode type, and button state.
     """
 
     def __init__(self, x_pos, y_pos, text, clicked, surf, type):
@@ -341,11 +312,6 @@ class ModeButton:
         self.type = type
 
     def draw(self):
-        """
-        Vẽ nút trên màn hình và kiểm tra sự tương tác của người dùng.
-        Nếu người dùng nhấp chuột lên nút, trạng thái của nút sẽ được cập nhật.
-        """
-
         if self.type == 'Mode':
             rect = pygame.draw.rect(self.surf, (45, 89, 135), (self.x_pos, self.y_pos, 150, 60), 0, 10)
             if rect.collidepoint(pygame.mouse.get_pos()):
@@ -405,15 +371,15 @@ class ModeButton:
 
 def draw_screen():
     """
-    Vẽ giao diện chính của trò chơi trên màn hình.
+    Draw the main interface of the game on the screen.
     
-    Mô tả:
-    - Vẽ khung viền và các đường phân chia các khu vực khác nhau của màn hình.
-    - Hiển thị thông tin về cấp độ hiện tại, chuỗi hoạt động của người chơi, điểm số và mức điểm cao nhất.
-    - Vẽ và xử lý các thành phần giao diện như nút tạm dừng và các thông tin liên quan đến trò chơi.
+    Describe:
+        - Draw borders and lines dividing different areas of the screen.
+        - Displays information about the current level, player's activity sequence, score and highest score.
+        - Draw and process interface elements such as pause button and game-related information.
     
-    Trả về:
-    - `bool`: Trạng thái của nút tạm dừng (True nếu đã được nhấp, ngược lại là False).
+    Return:
+        - `bool`: State of the pause button (True if clicked, False otherwise).
     """
 
     # screen outlines for main game window and 'header' section
@@ -445,21 +411,21 @@ def draw_screen():
 
 def draw_menu():
     """
-    Vẽ giao diện menu của trò chơi trên màn hình.
+    Draw the game's menu interface on the screen.
     
-    Mô tả:
-    - Vẽ các thành phần giao diện như các nút tùy chọn chế độ chơi, nút thoát, nút hướng dẫn, và các nút tùy chọn âm nhạc.
-    - Kiểm tra tương tác của người chơi với các nút và cập nhật trạng thái tương ứng.
+    Describe:
+        - Draw interface elements such as game mode options buttons, exit button, guide button, and music option buttons.
+        - Check player interactions with buttons and update status accordingly.
     
-    Trả về:
-    - `tuple`: Một tuple chứa:
-        - `bool`: Trạng thái của nút "PLAY" (True nếu đã được nhấp, ngược lại là False).
-        - `list`: Danh sách trạng thái của các tùy chọn độ dài chữ cái (True hoặc False).
-        - `bool`: Trạng thái của nút "QUIT" 
-        - `bool`: Trạng thái của nút "BACK MENU"
-        - `bool`: Trạng thái của nút "?" (hướng dẫn)
-        - `bool`: Trạng thái của nút "I>" (âm nhạc)
-        - `bool`: Trạng thái của nút "GAME MODE"
+    Return:
+     - `tuple`: A tuple contains:
+     - `bool`: State of the "PLAY" button (True if clicked, False otherwise).
+     - `list`: Status list of letter length options (True or False).
+     - `bool`: State of the "QUIT" button
+     - `bool`: State of the "BACK MENU" button 
+     - `bool`: Status of button "?" (instructions)
+     - `bool`: State of the "I>" (music) button
+     - `bool`: State of the "GAME MODE" button
     """
 
     choice_commits = copy.deepcopy(choices)
@@ -505,15 +471,14 @@ def draw_menu():
     return (resume_btn.clicked, choice_commits, quit_btn.clicked, backmenu_btn.clicked, manual_btn.clicked,
             music_btn.clicked, game_mode_btn.clicked)
 
-
 def draw_cannot_change_mode_while_playing():
     """
-    Vẽ thông báo không thể thay đổi chế độ chơi trong khi đang chơi trên màn hình.
+    Draw the message that you cannot change the game mode while playing on the screen.
 
-    Mô tả:
-    - Tạo một bề mặt mới với hiệu ứng trong suốt.
-    - Vẽ một hộp thoại chứa thông báo không thể thay đổi chế độ chơi trong khi đang chơi.
-    - Hiển thị văn bản thông báo bằng phông chữ và màu sắc được chỉ định.
+    Describe:
+     - Create a new surface with transparency effect.
+     - Draw a dialog box containing a message that you cannot change the game mode while playing.
+     - Display notification text in specified font and color.
     """
 
     surface = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
@@ -530,16 +495,16 @@ def draw_cannot_change_mode_while_playing():
 
 def draw_manual():
     """
-    Vẽ hướng dẫn cách chơi trên màn hình.
+    Draw instructions on how to play on the screen.
 
-    Mô tả:
-    - Tạo một bề mặt mới với hiệu ứng trong suốt.
-    - Vẽ một hộp thoại chứa hướng dẫn cách chơi.
-    - Hiển thị văn bản hướng dẫn bằng phông chữ và màu sắc được chỉ định.
-    - Vẽ nút điều hướng trở lại menu.
+    Describe:
+     - Create a new surface with transparency effect.
+     - Draw a dialog box containing instructions on how to play.
+     - Display instruction text in specified font and color.
+     - Draw navigation button back to menu.
 
-    Trả về:
-    - `bool`: Trạng thái của nút điều hướng trở lại menu (True nếu đã được nhấp, ngược lại là False).
+    Return:
+     - `bool`: State of the back menu navigation button 
     """
 
     surface = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
@@ -562,22 +527,22 @@ def draw_manual():
 
 def draw_music_option():
     """
-    Vẽ tùy chọn âm nhạc trên màn hình.
+    Draw music options on screen.
 
-    Mô tả:
-    - Tạo một bề mặt mới với hiệu ứng trong suốt.
-    - Vẽ một hộp thoại chứa tùy chọn âm nhạc.
-    - Hiển thị văn bản tiêu đề và các tùy chọn âm nhạc như dừng/chạy nhạc, tăng/giảm âm lượng.
-    - Vẽ nút điều hướng trở lại menu, dừng/chạy nhạc, và các nút tăng/giảm âm lượng.
-    - Hiển thị trạng thái hiện tại của tùy chọn âm nhạc.
+    Describe:
+     - Create a new surface with transparency effect.
+     - Draw a dialog box containing music options.
+     - Display title text and music options such as stop/play music, increase/decrease volume.
+     - Draw navigation buttons back to menu, stop/play music, and volume up/down buttons.
+     - Shows the current status of music options.
 
-    Trả về:
-    - Một tuple chứa các giá trị:
-        - `bool`: Trạng thái của nút điều hướng trở lại menu (True nếu đã được nhấp, ngược lại là False).
-        - `bool`: Trạng thái của nút dừng nhạc 
-        - `bool`: Trạng thái của nút chạy nhạc 
-        - `bool`: Trạng thái của nút tăng âm lượng
-        - `bool`: Trạng thái của nút giảm âm lượng
+    Return:
+     - A tuple contains the following values:
+        + `bool`: State of the back menu navigation button
+        + `bool`: Status of the music stop button 
+        + `bool`: State of the music playback button
+        + `bool`: State of the volume up button 
+        + `bool`: State of the volume down button 
     """
 
     surface = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
@@ -630,20 +595,20 @@ def draw_music_option():
 
 def draw_game_over():
     """
-    Vẽ giao diện khi trò chơi kết thúc trên màn hình.
+    Draw the interface when the game ends on the screen.
 
-    Mô tả:
-    - Tạo một bề mặt mới với hiệu ứng trong suốt.
-    - Vẽ một hộp thoại chứa thông báo kết thúc trò chơi.
-    - Hiển thị thông tin về điểm số của người chơi, bao gồm điểm số hiện tại và liệu có lập kỷ lục mới hay không.
-    - Vẽ các nút như: bắt đầu lại, quay lại menu, thoát, và lịch sử từ.
+    Describe:
+     - Create a new surface with transparency effect.
+     - Draw a dialog box containing the end-of-game message.
+     - Displays information about the player's score, including the current score and whether a new record has been set.
+     - Draw buttons such as: start again, return to menu, exit, and word history.
     
-    Trả về:
-    - Một tuple chứa các giá trị:
-        - `bool`: Trạng thái của nút bắt đầu lại
-        - `bool`: Trạng thái của nút quay lại menu
-        - `bool`: Trạng thái của nút thoát 
-        - `bool`: Trạng thái của nút lịch sử từ 
+    Return:
+     - A tuple contains the following values:
+         - `bool`: State of the restart button.
+         - `bool`: State of the menu back button.
+         - `bool`: State of the exit button.
+         - `bool`: State of the word history button.
     """
 
     surface = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
@@ -676,17 +641,17 @@ def draw_game_over():
 
 def draw_are_you_sure():
     """
-    Vẽ giao diện xác nhận hành động trên màn hình.
+    VDraw the action confirmation interface on the screen.
 
-    Mô tả:
-    - Tạo một bề mặt mới với hiệu ứng trong suốt.
-    - Vẽ một hộp thoại chứa câu hỏi xác nhận hành động từ người chơi.
-    - Hiển thị các nút "YES" và "NO" để người chơi chọn lựa.
+    Describe:
+     - Create a new surface with transparency effect.
+     - Draw a dialog box containing an action confirmation question from the player.
+     - Display "YES" and "NO" buttons for players to choose from.
 
-    Trả về:
-    - Một tuple chứa các giá trị:
-        - `bool`: Trạng thái của nút "YES"
-        - `bool`: Trạng thái của nút "NO"
+    Return:
+     - A tuple contains the following values:
+         - `bool`: Status of the "YES" button
+         - `bool`: State of the "NO" button
     """
 
     surface = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
@@ -706,22 +671,22 @@ def draw_are_you_sure():
 
 def draw_game_mode():
     """
-    Vẽ giao diện chế độ chơi trên màn hình.
+    Draw the game mode interface on the screen.
 
-    Mô tả:
-    - Tạo một bề mặt mới với hiệu ứng trong suốt.
-    - Vẽ một hộp thoại chứa các tùy chọn về chế độ chơi, độ khó, và hiển thị chủ đề.
-    - Hiển thị tiêu đề và các nút điều khiển như trở về menu, chọn độ khó (dễ, vừa, khó), và kiểu chữ (hiragana, katakana).
-    - Hiển thị các nút để điều chỉnh chủ đề trò chơi, bao gồm tăng/giảm chủ đề và hiển thị chủ đề hiện tại.
-    - Cập nhật và hiển thị các lựa chọn đã được người dùng chọn, như độ khó và kiểu chữ.
+    Describe:
+     - Create a new surface with transparency effect.
+     - Draw a dialog box containing options for game mode, difficulty, and theme display.
+     - Displays the title and controls such as returning to the menu, selecting difficulty (easy, medium, hard), and text style (hiragana, katakana).
+     - Displays buttons to adjust game theme, including increase/decrease theme and display current theme.
+     - Updates and displays options selected by the user, such as difficulty and font style.
 
-    Trả về:
-    - Một tuple chứa các giá trị:
-        - `bool`: Trạng thái của nút trở về menu.
-        - `bool`: Trạng thái của nút chọn độ khó dễ.
-        - `bool`: Trạng thái của nút chọn độ khó khó.
-        - `bool`: Trạng thái của nút chọn hiragana.
-        - `bool`: Trạng thái của nút chọn katakana.
+    Return:
+     - A tuple contains the following values:
+         - `bool`: Status of the menu return button.
+         - `bool`: Status of the difficulty button.
+         - `bool`: State of the difficulty button.
+         - `bool`: State of the hiragana select button.
+         - `bool`: State of the katakana selection button.
     """
     surface = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
     pygame.draw.rect(surface, (0, 0, 0, 100), [200, 100, 600, 460], 0, 5)
@@ -797,24 +762,23 @@ y_pos_of_text_part = 0
 miss, hit = True, False
 def draw_history():
     """
-    Vẽ màn hình lịch sử trong ứng dụng pygame, hiển thị danh sách các lựa chọn 'hit' (đúng) hoặc 'miss' (sai).
-    Người dùng có thể xem lại các câu trả lời trước đó của mình được phân loại thành hit hoặc miss cùng với bản dịch và ý nghĩa tương ứng.
-    Màn hình này cũng cung cấp các nút tương tác để chuyển đổi giữa hiển thị danh sách hit hoặc miss và một nút để quay trở lại màn hình kết thúc trò chơi.
+    Draw a history screen in the pygame application, showing a list of 'hit' (true) or 'miss' (false) choices.
+    Users can review their previous answers categorized as hits or misses along with their respective translations and meanings.
+    This screen also provides interactive buttons to toggle between displaying the hit or miss list and a button to return to the end-game screen.
 
-    Hàm này xử lý tương tác của người dùng với các nút hit và miss để chuyển đổi danh sách hiển thị.
-    Nó điều chỉnh động kích thước nội dung dựa trên số lượng mục và đảm bảo nội dung vừa vặn trong khu vực đã định trước,
-    với khả năng cuộn qua các mục nếu chúng vượt quá khu vực nhìn thấy.
+    This function handles user interaction with the hit and miss buttons to toggle the display list.
+    It dynamically adjusts content size based on the number of items and ensures content fits within a predetermined area, with the ability to scroll through items if they exceed the visible area.
 
-    Các biến toàn cục sử dụng:
-    - miss: Một biến boolean chỉ ra nếu nút miss đang được kích hoạt.
-    - hit: Một biến boolean chỉ ra nếu nút hit đang được kích hoạt.
-    - y_pos_of_text_part: Một biến số nguyên theo dõi vị trí cuộn dọc của phần văn bản lịch sử.
+    Global variables used:
+     - miss: A boolean variable indicating if the miss button is active.
+     - hit: A boolean variable indicating if the hit button is active.
+     - y_pos_of_text_part: An integer variable that tracks the vertical scroll position of the history text part.
     
-    Thay đổi:
-    - Các biến toàn cục `miss`, `hit` và `y_pos_of_text_part` dựa trên tương tác người dùng.
+    Change:
+     - Global variables `miss`, `hit` and `y_pos_of_text_part` based on user interaction.
     
-    Trả về:
-    - Boolean: Trả về True nếu nút quay lại màn hình kết thúc trò chơi được nhấn, ngược lại trả về False.
+    Return:
+     - Boolean: Returns True if the button to return to the game end screen is pressed, otherwise returns False.
     """
     surface = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
     pygame.draw.rect(surface, (0, 0, 0, 100), [140, 70, 720, 515], 0, 5)
@@ -896,13 +860,13 @@ def draw_history():
 
 def get_speed(len_text):
     """
-    Xác định tốc độ của từ dựa trên độ dài của từ và chế độ chơi hiện tại.
+    Determine the speed of the word based on the length of the word and the current game mode.
 
-    Tham số:
-    - len_text (int): Độ dài của từ.
+    Parameters:
+     - len_text (int): Length of word.
 
-    Trả về:
-    - float: Tốc độ của từ được xác định ngẫu nhiên từ một tập hợp các giá trị dựa trên độ dài của từ và chế độ chơi hiện tại.
+    Return:
+     - float: The speed of the word is determined randomly from a set of values based on the length of the word and the current game mode.
     """
 
     if mode_choices[0]:
@@ -930,10 +894,10 @@ def get_speed(len_text):
 
 def get_number_of_word_base_on_mode():
     """
-    Xác định số lượng từ cần có trong cấp độ hiện tại dựa trên chế độ chơi và cấp độ trò chơi.
+    Determines the number of words required in the current level based on the game mode and game level.
 
-    Trả về:
-    - int: Số lượng từ cần có trong cấp độ hiện tại dựa trên chế độ chơi và cấp độ trò chơi.
+    Return:
+     - int: Number of words required in the current level based on game mode and game level.
     """
     if mode_choices[0]:
         if level <= 2:
@@ -960,15 +924,15 @@ def get_number_of_word_base_on_mode():
 
 def generate_level():
     """
-    Tạo cấp độ trò chơi mới với một số từ ngẫu nhiên.
+    Create new game levels with some random words.
 
-    Mô tả:
-    - Xác định số lượng từ cần có trong cấp độ hiện tại.
-    - Tạo các từ ngẫu nhiên với vị trí y và x, tốc độ và văn bản.
-    - Lưu các đối tượng từ vào danh sách `word_objs`.
+    Describe:
+     - Determine the number of words needed in the current level.
+     - Generate random words with y and x position, speed and text.
+     - Save word objects to `word_objs` list.
 
-    Trả về:
-    - list: Danh sách các đối tượng từ được tạo trong cấp độ hiện tại.
+    Return:
+     - list: List of word objects created in the current level.
     """
 
     word_objs = []
@@ -1000,13 +964,13 @@ def generate_level():
 
 def check_answer(scor):
     """
-    Kiểm tra câu trả lời người dùng đã nhập.
+    Check the answer the user entered.
 
-    Tham số:
-    - scor (int): Điểm số hiện tại của người chơi.
+    Parameters:
+     - scor (int): Player's current score.
 
-    Trả về:
-    - int: Điểm số cập nhật sau khi kiểm tra câu trả lời.
+    Return:
+     - int: Updated score after checking answers.
     """
 
     global submit_to_english
@@ -1024,7 +988,7 @@ def check_answer(scor):
 
 def check_high_score():
     """
-    Cập nhật điểm cao nếu điểm hiện tại cao hơn điểm cao hiện có.
+    Update high score if current score is higher than existing high score.
     """
 
     global high_score
@@ -1035,22 +999,22 @@ def check_high_score():
 pop_up_start_time = 0
 def pop_up(duration):
     """
-    Kích hoạt một thông báo pop-up và thiết lập một bộ đếm thời gian dựa trên thời lượng chỉ định.
-    Thông báo này ngăn người dùng thay đổi chế độ chơi trong khi trò chơi đang diễn ra.
-
-    Chức năng này sử dụng biến toàn cục để theo dõi thời điểm bắt đầu của pop-up và để quản lý trạng thái hiển thị của cảnh báo ngăn thay đổi chế độ chơi.
+    Trigger a pop-up notification and set a timer based on the specified duration.
+    This message prevents users from changing game modes while the game is in progress.
+    This function uses global variables to track the start time of the pop-up and to manage the display state of the game mode change prevention warning.
 
     Args:
-    - duration (int hoặc float): Thời gian hiển thị pop-up, tính bằng giây. Đây cũng là khoảng thời gian mà người dùng không thể thay đổi chế độ chơi.
+     - duration (int or float): Pop-up display time, in seconds. This is also the time period during which users cannot change the game mode.
 
-    Biến toàn cục:
-    - pop_up_start_time (float): Biến được sử dụng để lưu thời gian bắt đầu kích hoạt pop-up. Giá trị này được cập nhật mỗi khi hàm được gọi.
-    - show_cannot_change_mode_while_playing (bool): Biến kiểm soát việc hiển thị thông báo ngăn thay đổi chế độ.
-    - Được thiết lập là True khi pop-up được kích hoạt và nên được đặt lại thành False bởi sự kiện bộ đếm thời gian khi hết thời gian chỉ định.
+    Global variables:
+     - pop_up_start_time (float): Variable used to store the pop-up activation start time. This value is updated every time the function is called.
+     - show_cannot_change_mode_while_playing (bool): Variable that controls the display of messages preventing mode changes.
+     - Is set to True when the pop-up is triggered and should be reset to False by the timer event when the specified time expires.
 
-    Tác dụng phụ:
-    - Thiết lập một bộ đếm thời gian trong pygame, sự kiện này được định nghĩa để tự động xử lý việc ẩn thông báo và cho phép thay đổi chế độ chơi trở lại sau khi thời gian chỉ định đã qua.
-    - Sự kiện này sử dụng pygame.USEREVENT + 1 để nhận biết và cần được xử lý phù hợp trong vòng lặp sự kiện chính của trò chơi.
+    Side effects:
+     - Set up a timer in pygame, this event is defined to automatically handle notification hiding and allow changing the game mode back after the specified time has passed.
+     - This event uses pygame.USEREVENT + 1 for recognition and should be handled appropriately in the game's main event loop.
+
     """
 
     global pop_up_start_time, show_cannot_change_mode_while_playing
