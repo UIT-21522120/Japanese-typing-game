@@ -17,7 +17,6 @@ pygame.display.set_caption('Japanese Typing Game!')
 surface = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
 timer = pygame.time.Clock()
 fps = 60
-
 score = 0
 save_score = 0
 
@@ -59,7 +58,6 @@ wrong.set_volume(0.3)
 level = 1
 lives = 5
 word_objects = []
-
 high_score = 0
 new_game = True
 pz = True
@@ -71,7 +69,7 @@ active_string_hiragana = ''
 letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q',
            'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '-']
 
-# list show những từ đã gõ đúng và gõ sai trong phần history
+# list shows correctly typed and incorrectly typed words in the history
 all_words_appeared = []
 hit_list = []
 miss_list = []
@@ -353,6 +351,8 @@ class ModeButton:
                 self.surf.blit(pause_font_for_mode.render(self.text, True, '#ffffcc'), (self.x_pos + 70, self.y_pos + 12))
             if self.text == 'RANKING':
                 self.surf.blit(pause_font_for_mode.render(self.text, True, '#ffffcc'), (self.x_pos + 36, self.y_pos + 12))
+            if self.text == 'HISTORY':
+                self.surf.blit(pause_font_for_mode.render(self.text, True, '#ffffcc'), (self.x_pos + 45, self.y_pos + 12))
             if self.text == 'PLAY':
                 self.surf.blit(pause_font_for_mode.render(self.text, True, '#ffffcc'), (self.x_pos + 65, self.y_pos + 12))
             if self.text == 'BACK MENU':
@@ -927,11 +927,22 @@ def load_leaderboard():
     """
     try:
         with open("D://Python/PythonTypingRacer/Japanese-typing-game/PythonTypingRacer/leaderboard.txt", "r") as f:
-            leaderboard = [line.strip().split(": ") for line in f.readlines()]
-            leaderboard = [(name, int(score)) for name, score in leaderboard]
+            leaderboard = []
+            for line in f.readlines():
+                parts = line.strip().split(": ")
+                if len(parts) == 2:
+                    try:
+                        name, score = parts[0], int(parts[1])
+                        leaderboard.append((name, score))
+                    except ValueError:
+                        print(f"Skipping line due to invalid score: {line.strip()}")
+                else:
+                    print(f"Skipping incorrectly formatted line: {line.strip()}")
+
             leaderboard.sort(key=lambda x: x[1], reverse=True)
             return leaderboard
     except FileNotFoundError:
+        print("Leaderboard file not found.")
         return []
 
 
@@ -951,13 +962,12 @@ def draw_leaderboard():
     surface = pygame.Surface((WIDTH, HEIGHT), pygame.SRCALPHA)
     pygame.draw.rect(surface, (0, 0, 0, 100), [bounds_x, bounds_y, bounds_width, bounds_height], 0,5)
     pygame.draw.rect(surface, (0, 0, 0, 200), [bounds_x, bounds_y, bounds_width, bounds_height], 5,5)
-    surface.blit(header_font.render('LEADERBOARD', True, 'white'), (350, 90))
 
     leaderboard = load_leaderboard()
 
     # Setting up scrolling bounds
     total_content_height = len(leaderboard) * 50
-    min_y_pos = min(80, bounds_height - total_content_height)  # Negative or zero
+    min_y_pos = min(100, bounds_height - total_content_height)  # Negative or zero
     y_pos_of_leaderboard = max(min_y_pos, y_pos_of_leaderboard)  # Ensure not to scroll past content
 
     # Process events (assume this function is called within the event loop context)
