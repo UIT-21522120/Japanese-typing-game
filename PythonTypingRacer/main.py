@@ -472,13 +472,7 @@ def draw_menu():
             else:
                 choice_commits[i] = True
         if choices[i]:
-<<<<<<< HEAD
-            pygame.draw.circle(surface, 'yellow', (270 + (i * 80), 495), 35, 5)
-   
-
-=======
             pygame.draw.circle(surface, 'yellow', (270 + (i * 90), 495), 35, 5)
->>>>>>> 7b76de1574f69d9f94b4a5b55b4cf14d4206363d
     screen.blit(surface, (0, 0))
     return (resume_btn.clicked, choice_commits, quit_btn.clicked, backmenu_btn.clicked, manual_btn.clicked,
             music_btn.clicked, game_mode_btn.clicked, leaderboard_button.clicked)
